@@ -102,6 +102,9 @@ export default function HeroSection() {
             if (!allImages[currentSeqIndex]) return;
             const img = allImages[currentSeqIndex][currentFrameIndex];
             if (img && img.complete) {
+                // Force high-quality interpolation
+                context.imageSmoothingEnabled = true;
+                context.imageSmoothingQuality = "high";
                 drawImageProp(context, img);
             } else if (img) {
                 img.onload = render;
@@ -171,7 +174,9 @@ export default function HeroSection() {
     return (
         <div ref={containerRef} className="hero-container">
             <div className="canvas-container relative h-[auto]">
-                <canvas ref={canvasRef} id="hero-canvas"></canvas>
+                <canvas ref={canvasRef} id="hero-canvas" style={{ filter: 'brightness(1.1) contrast(1.1) saturate(1.05)' }}></canvas>
+                {/* Visual clarification overlay */}
+                <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-transparent to-black/60 pointer-events-none z-10"></div>
             </div>
 
             <div className="fixed-text-container">
